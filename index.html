@@ -9,8 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- خط عربي + خط إنجليزي احترافي -->
-  <!-- خط عربي Tajawal + احتياطي إنجليزي -->
+
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -28,7 +27,7 @@
     html{scroll-behavior:smooth}
 
     body{
-      /* استخدام خط عربي + إنجليزي */
+      
       font-family:"Tajawal",sans-serif;
       background:
         radial-gradient(circle at top right, rgba(46,219,255,.25), transparent 34%),
@@ -383,13 +382,13 @@
 
     .contact-box{
       display:flex;
-      flex-direction:row; /* افتراضياً جنب بعض للكمبيوتر */
+      flex-direction:row; 
       gap:16px;
     }
 
     @media(max-width:700px){
       .contact-box{
-        flex-direction:column; /* بالموبايل تحت بعض */
+        flex-direction:column; 
       }
     }
 
@@ -560,7 +559,7 @@
 
   <main id="home" class="container hero reveal">
     <div class="badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Deep | ديب للتصاميم</div>
-    <h1><span>معرض تصاميم احترافي</span></h1>
+    <h1><span>معرض التصاميم</span></h1>
   </main>
 
   <section id="logos" class="container reveal">
@@ -764,7 +763,6 @@
 
     loadDesigns();
 
-    // حماية بسيطة: منع كليك يمين وبعض اختصارات فحص الصفحة
     document.addEventListener('contextmenu', function(e){
       e.preventDefault();
     });

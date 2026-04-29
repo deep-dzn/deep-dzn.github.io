@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deep | ديب للتصاميم</title>
+  <link rel="icon" type="image/jpeg" href="https://i.ibb.co/QFgzhh7H/793ce648-d9ea-4c3c-8d2c-308f837e0e0c.jpg">
+  <link rel="apple-touch-icon" href="https://i.ibb.co/QFgzhh7H/793ce648-d9ea-4c3c-8d2c-308f837e0e0c.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- خط عربي + خط إنجليزي احترافي -->
+  <!-- خط عربي Tajawal + احتياطي إنجليزي -->
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root{
+      --blue:#2EDBFF;
+      --blue2:#2667ff;
+      --text:#f6fbff;
+      --muted:#a9b7c7;
+      --border:rgba(255,255,255,.16);
+      --shadow:0 24px 80px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+
+    body{
+      /* استخدام خط عربي + إنجليزي */
+      font-family:"Tajawal",sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(46,219,255,.25), transparent 34%),
+        radial-gradient(circle at 20% 25%, rgba(38,103,255,.23), transparent 35%),
+        linear-gradient(135deg,#03050a,#07111f 45%,#02040a);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size:44px 44px;
+      pointer-events:none;
+      z-index:-2;
+    }
+
+    .orb{
+      position:fixed;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      filter:blur(18px);
+      opacity:.55;
+      z-index:-1;
+      animation:float 8s ease-in-out infinite;
+    }
+    .orb.one{background:rgba(46,219,255,.35);top:120px;left:-80px}
+    .orb.two{background:rgba(38,103,255,.32);bottom:100px;right:-80px;animation-delay:1.5s}
+
+    @keyframes float{
+      0%,100%{transform:translateY(0) scale(1)}
+      50%{transform:translateY(-24px) scale(1.05)}
+    }
+
+    .container{width:min(1180px,92%);margin:auto}
+
+    header{
+      position:sticky;
+      top:14px;
+      z-index:20;
+      margin-top:14px;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:14px 16px;
+      background:rgba(255,255,255,.075);
+      border:1px solid var(--border);
+      border-radius:26px;
+      backdrop-filter:blur(24px);
+      box-shadow:var(--shadow);
+    }
+
+    .header-icons{
+      display:none;
+      gap:10px;
+    }
+
+    .header-icons a{
+      width:40px;
+      height:40px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.1);
+      border:1px solid var(--border);
+      color:white;
+      text-decoration:none;
+      transition:.25s;
+    }
+
+    .header-icons a:hover{
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+    }
+
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+
+    .logo{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      overflow:hidden;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.18);
+      box-shadow:0 0 28px rgba(46,219,255,.35);
+      flex:0 0 auto;
+    }
+
+    .logo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .brand small{display:block;color:var(--muted);font-weight:500;margin-top:2px}
+
+    nav ul{display:flex;list-style:none;gap:10px;align-items:center}
+    nav a{
+      color:#dcefff;
+      text-decoration:none;
+      padding:11px 14px;
+      border-radius:16px;
+      transition:.25s;
+      font-weight:700;
+    }
+    nav a:hover{background:rgba(255,255,255,.12);color:white}
+
+    .mobile-menu{display:none}
+
+    .hero{
+      padding:58px 0 14px;
+      text-align:center;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      padding:10px 14px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(18px);
+      color:#dff8ff;
+      margin-bottom:18px;
+      font-weight:700;
+    }
+
+    .hero h1{
+      font-size:clamp(42px,7vw,82px);
+      line-height:1.04;
+      font-weight:900;
+      letter-spacing:-2px;
+    }
+
+    .hero h1 span{
+      display:block;
+      background:linear-gradient(135deg,#fff,var(--blue),#5a7cff);
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+
+    .hero p{display:none}
+
+    .actions{display:none}
+    .btn:hover{transform:translateY(-4px)}
+
+    section{padding:38px 0}
+
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .section-title h2{
+      font-size:30px;
+      font-weight:900;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .section-title h2 i{color:var(--blue)}
+    .section-title p{display:none}
+
+    .glass-box{
+      padding:18px;
+      border-radius:32px;
+      background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045));
+      border:1px solid var(--border);
+      backdrop-filter:blur(24px);
+      box-shadow:0 20px 60px rgba(0,0,0,.3);
+    }
+
+    .gallery{
+      display:grid;
+      gap:16px;
+    }
+
+    .gallery.square{
+      grid-template-columns:repeat(4,1fr);
+    }
+
+    .gallery.banner{
+      grid-template-columns:repeat(2,1fr);
+    }
+
+    .design-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:26px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      cursor:pointer;
+      box-shadow:0 14px 40px rgba(0,0,0,.25);
+      transition:.28s;
+    }
+
+    .design-card.square-card{aspect-ratio:1/1}
+    .design-card.banner-card{aspect-ratio:16/7}
+
+    .design-card:hover{
+      transform:translateY(-7px) scale(1.01);
+      border-color:rgba(46,219,255,.55);
+      box-shadow:0 24px 70px rgba(46,219,255,.12);
+    }
+
+    .design-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:.35s;
+    }
+
+    .design-card:hover img{transform:scale(1.08)}
+    .design-card:hover .card-info{opacity:1}
+
+    .design-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top,rgba(0,0,0,.75),transparent 65%);
+    }
+
+    .card-info{
+      position:absolute;
+      inset:0;
+      z-index:2;
+      display:grid;
+      place-items:center;
+      opacity:0;
+      transition:.28s;
+    }
+
+    .card-info b{display:none}
+
+    .empty,
+    .loading-card{
+      color:var(--muted);
+      text-align:center;
+      padding:24px;
+      border:1px dashed rgba(255,255,255,.15);
+      border-radius:22px;
+      grid-column:1/-1;
+      font-weight:800;
+    }
+    .card-info span{
+      min-width:38px;
+      height:38px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter:blur(12px);
+      color:var(--blue);
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      z-index:999;
+      display:none;
+      place-items:center;
+      padding:18px;
+      background:rgba(0,0,0,.72);
+      backdrop-filter:blur(18px);
+    }
+
+    .modal.active{display:grid}
+
+    .modal-content{
+      position:relative;
+      width:min(980px,96vw);
+      max-height:90vh;
+      padding:14px;
+      border-radius:30px;
+      background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.2);
+      box-shadow:0 30px 100px rgba(0,0,0,.6);
+      animation:pop .22s ease;
+    }
+
+    @keyframes pop{
+      from{transform:scale(.94);opacity:0}
+      to{transform:scale(1);opacity:1}
+    }
+
+    .modal-content img{
+      width:100%;
+      max-height:78vh;
+      object-fit:contain;
+      display:block;
+      border-radius:22px;
+      background:#02040a;
+    }
+
+    .close-btn{
+      position:absolute;
+      top:-16px;
+      left:-12px;
+      width:48px;
+      height:48px;
+      border:none;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+      color:white;
+      font-size:20px;
+      cursor:pointer;
+      box-shadow:0 15px 40px rgba(46,219,255,.25);
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(34px);
+      transition:opacity .75s ease, transform .75s ease;
+    }
+
+    .reveal.show{
+      opacity:1;
+      transform:translateY(0) scale(1);
+    }
+
+    .design-card{
+      animation:softFloat 5s ease-in-out infinite;
+    }
+
+    .design-card:nth-child(2){animation-delay:.4s}
+    .design-card:nth-child(3){animation-delay:.8s}
+    .design-card:nth-child(4){animation-delay:1.2s}
+
+    @keyframes softFloat{
+      0%,100%{translate:0 0}
+      50%{translate:0 -6px}
+    }
+
+    .contact-box{
+      display:flex;
+      flex-direction:row; /* افتراضياً جنب بعض للكمبيوتر */
+      gap:16px;
+    }
+
+    @media(max-width:700px){
+      .contact-box{
+        flex-direction:column; /* بالموبايل تحت بعض */
+      }
+    }
+
+    .contact-card{
+      min-height:145px;
+      padding:22px;
+      border-radius:28px;
+      background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045));
+      border:1px solid var(--border);
+      backdrop-filter:blur(24px);
+      box-shadow:0 18px 48px rgba(0,0,0,.25);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:16px;
+      text-decoration:none;
+      color:white;
+      transition:.28s;
+    }
+
+    .contact-card:hover{
+      transform:translateY(-8px);
+      border-color:rgba(46,219,255,.55);
+      box-shadow:0 24px 70px rgba(46,219,255,.13);
+    }
+
+    .contact-card i{
+      width:48px;
+      height:48px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      font-size:22px;
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+      box-shadow:0 12px 34px rgba(46,219,255,.22);
+    }
+
+    .contact-card b{font-size:20px;font-weight:900}
+    .contact-card span{color:var(--muted);font-weight:700;direction:ltr;text-align:right}
+
+    .credit-link{
+      position:relative;
+      overflow:hidden;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      margin-top:18px;
+      padding:14px 22px;
+      border-radius:999px;
+      color:white;
+      text-decoration:none;
+      font-size:16px;
+      font-weight:900;
+      background:linear-gradient(135deg,rgba(46,219,255,.2),rgba(38,103,255,.18));
+      border:1px solid rgba(46,219,255,.38);
+      backdrop-filter:blur(18px);
+      box-shadow:0 14px 42px rgba(46,219,255,.13), inset 0 1px 0 rgba(255,255,255,.16);
+      transition:.28s;
+    }
+
+    .credit-link::before{
+      content:"";
+      position:absolute;
+      top:0;
+      right:-90%;
+      width:70%;
+      height:100%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.24),transparent);
+      transform:skewX(-18deg);
+      transition:.6s;
+    }
+
+    .credit-link i{
+      width:34px;
+      height:34px;
+      border-radius:13px;
+      display:grid;
+      place-items:center;
+      color:#00131a;
+      background:linear-gradient(135deg,var(--blue),#fff);
+      box-shadow:0 0 22px rgba(46,219,255,.32);
+    }
+
+    .credit-link:hover{
+      transform:translateY(-5px) scale(1.02);
+      color:white;
+      border-color:rgba(46,219,255,.7);
+      box-shadow:0 22px 60px rgba(46,219,255,.2), inset 0 1px 0 rgba(255,255,255,.2);
+    }
+
+    .credit-link:hover::before{right:120%}
+
+    footer{
+      font-size:14px;
+      
+      padding:36px 0 44px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    @media(max-width:900px){
+      nav ul{display:none}
+      .gallery.square{grid-template-columns:repeat(2,1fr)}
+      .gallery.banner{grid-template-columns:1fr}
+      .section-title{display:block}
+      .section-title h2{margin-bottom:6px}
+      .hero p{font-size:17px}
+    }
+
+    @media(max-width:520px){
+      header{top:6px;margin-top:6px}
+      .nav{min-height:70px;padding:14px 14px}
+      .logo{width:50px;height:50px}
+      .brand strong{font-size:17px}
+      .brand small{font-size:12px}
+      
+      .header-icons{display:flex}
+      .nav{border-radius:22px;padding:12px}
+      .logo{width:43px;height:43px;border-radius:15px}
+      .brand strong{font-size:15px}
+      .brand small{font-size:11px}
+      .hero{padding-top:54px}
+      .hero h1{font-size:43px}
+      .actions .btn{width:100%}
+      .glass-box{padding:12px;border-radius:24px}
+      .gallery{gap:11px}
+      .design-card{border-radius:20px}
+      .section-title h2{font-size:25px}
+      .card-info{bottom:10px;right:10px;left:10px}
+      .card-info b{font-size:14px}
+      .card-info span{width:34px;height:34px;min-width:34px;border-radius:12px}
+      .close-btn{left:4px;top:4px;width:42px;height:42px;border-radius:15px}
+    }
+  </style>
+</head>
+<body>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+
+  <header class="container">
+    <div class="nav">
+      <div class="brand">
+        <div class="logo"><img src="https://i.ibb.co/QFgzhh7H/793ce648-d9ea-4c3c-8d2c-308f837e0e0c.jpg" alt="Deep Logo"></div>
+        <div>
+          <strong>Deep | ديب</strong>
+          <small>تصاميم رقمية احترافية</small>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#home">الرئيسية</a></li>
+          <li><a href="#logos">اللوجوات</a></li>
+          <li><a href="#banners">البنرات</a></li>
+          <li><a href="#posters">البوسترات</a></li>
+          <li><a href="#contact">تواصل</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-icons">
+        <a href="https://www.instagram.com/store.deep1" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.instagram.com/store.deep2" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/962797837670" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="home" class="container hero reveal">
+    <div class="badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Deep | ديب للتصاميم</div>
+    <h1><span>معرض تصاميم احترافي</span></h1>
+  </main>
+
+  <section id="logos" class="container reveal">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-signature"></i> قسم اللوجوات</h2>
+    </div>
+    <div class="glass-box">
+      <div class="gallery square" id="logosGallery">
+        <div class="loading-card">جاري تحميل اللوجوات...</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="banners" class="container reveal">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-rectangle-ad"></i> قسم البنرات</h2>
+    </div>
+    <div class="glass-box">
+      <div class="gallery banner" id="bannersGallery">
+        <div class="loading-card">جاري تحميل البنرات...</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="posters" class="container reveal">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-photo-film"></i> قسم البوسترات</h2>
+    </div>
+    <div class="glass-box">
+      <div class="gallery square" id="postersGallery">
+        <div class="loading-card">جاري تحميل البوسترات...</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="previewModal" onclick="closePreview(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closePreview(event)"><i class="fa-solid fa-xmark"></i></button>
+      <img id="previewImage" src="" alt="معاينة التصميم">
+    </div>
+  </div>
+
+  <section id="contact" class="container reveal">
+    <div class="section-title">
+      <h2><i class="fa-solid fa-headset"></i> تواصل معنا</h2>
+    </div>
+
+    <div class="contact-box">
+      <a class="contact-card" href="https://www.instagram.com/store.deep1" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+        <b>Instagram 1</b>
+        <span>@store.deep1</span>
+      </a>
+
+      <a class="contact-card" href="https://www.instagram.com/store.deep2" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+        <b>Instagram 2</b>
+        <span>@store.deep2</span>
+      </a>
+
+      <a class="contact-card" href="https://wa.me/962797837670" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+        <b>WhatsApp</b>
+        <span>+962 797 837 670</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="container">
+    <p>جميع الحقوق محفوظة © Deep</p>
+    <a class="credit-link" href="https://wa.me/962791940357" target="_blank">
+      <i class="fa-solid fa-code"></i>
+      برمجة وتصميم qaysar
+    </a>
+  </footer>
+
+  <script>
+    const WORKER_URL = 'https://deepdzn.dzn.workers.dev';
+    const CACHE_KEY = 'deep_designs_cache_v1';
+    const CACHE_TIME_KEY = 'deep_designs_cache_time_v1';
+    const CACHE_MAX_AGE = 1000 * 60 * 10; // 10 دقائق
+    const modal = document.getElementById('previewModal');
+    const previewImage = document.getElementById('previewImage');
+
+    function openPreview(card){
+      const img = card.querySelector('img');
+      previewImage.src = img.src;
+      previewImage.alt = img.alt || 'معاينة التصميم';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePreview(event){
+      if(event && event.target.closest('.modal-content') && !event.target.closest('.close-btn')) return;
+      modal.classList.remove('active');
+      previewImage.src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        modal.classList.remove('active');
+        previewImage.src = '';
+        document.body.style.overflow = '';
+      }
+    });
+
+    const revealItems = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('show');
+        }else{
+          entry.target.classList.remove('show');
+        }
+      });
+    },{threshold:.14});
+
+    revealItems.forEach(item=>revealObserver.observe(item));
+
+    function createDesignCard(item){
+      const isBanner = item.category === 'banners';
+      const card = document.createElement('div');
+      card.className = `design-card ${isBanner ? 'banner-card' : 'square-card'}`;
+      card.onclick = () => openPreview(card);
+
+      const img = document.createElement('img');
+      img.src = item.imageUrl;
+      img.alt = 'تصميم Deep';
+      img.loading = 'lazy';
+
+      const info = document.createElement('div');
+      info.className = 'card-info';
+      info.innerHTML = '<b></b><span><i class="fa-solid fa-magnifying-glass-plus"></i></span>';
+
+      card.appendChild(img);
+      card.appendChild(info);
+      return card;
+    }
+
+    function renderCategory(containerId, items, emptyText){
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      if(!items.length){
+        container.innerHTML = `<div class="empty">${emptyText}</div>`;
+        return;
+      }
+
+      items.forEach(item => container.appendChild(createDesignCard(item)));
+    }
+
+    function renderDesignsData(designs){
+      renderCategory('logosGallery', designs.filter(d => d.category === 'logos'), 'لا يوجد لوجوات حالياً');
+      renderCategory('bannersGallery', designs.filter(d => d.category === 'banners'), 'لا يوجد بنرات حالياً');
+      renderCategory('postersGallery', designs.filter(d => d.category === 'posters'), 'لا يوجد بوسترات حالياً');
+    }
+
+    function getCachedDesigns(){
+      try{
+        const saved = localStorage.getItem(CACHE_KEY);
+        const savedTime = Number(localStorage.getItem(CACHE_TIME_KEY) || 0);
+        const isFresh = Date.now() - savedTime < CACHE_MAX_AGE;
+        if(saved && isFresh) return JSON.parse(saved);
+      }catch(error){}
+      return null;
+    }
+
+    function saveDesignsCache(designs){
+      try{
+        localStorage.setItem(CACHE_KEY, JSON.stringify(designs));
+        localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+      }catch(error){}
+    }
+
+    async function loadDesigns(){
+      const cached = getCachedDesigns();
+      if(cached){
+        renderDesignsData(cached);
+      }
+
+      try{
+        const res = await fetch(`${WORKER_URL}/designs`, { cache:'no-store' });
+        const data = await res.json();
+
+        if(!data.ok){
+          throw new Error(data.error || 'Load failed');
+        }
+
+        const designs = data.designs || [];
+        saveDesignsCache(designs);
+        renderDesignsData(designs);
+      }catch(error){
+        if(!cached){
+          renderCategory('logosGallery', [], 'تعذر تحميل التصاميم');
+          renderCategory('bannersGallery', [], 'تعذر تحميل التصاميم');
+          renderCategory('postersGallery', [], 'تعذر تحميل التصاميم');
+        }
+      }
+    }
+
+    loadDesigns();
+
+    // حماية بسيطة: منع كليك يمين وبعض اختصارات فحص الصفحة
+    document.addEventListener('contextmenu', function(e){
+      e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(e){
+      const key = e.key.toLowerCase();
+
+      if(
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(key)) ||
+        (e.ctrlKey && ['u','s'].includes(key))
+      ){
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+</body>
+</html>

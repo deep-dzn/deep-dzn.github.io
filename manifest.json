@@ -1,20 +1,62 @@
-{
-  "name": "Deep Designs",
-  "short_name": "Deep",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#05070d",
-  "theme_color": "#2EDBFF",
-  "icons": [
-    {
-      "src": "/assets/logo.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/assets/logo.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
+let deferredInstallPrompt = null;
+const installToast = document.getElementById('installToast');
+const installBtn = document.getElementById('installBtn');
+const installClose = document.getElementById('installClose');
+
+function isAppInstalled(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 }
+
+function showInstallToast(){
+  if(isAppInstalled()){
+    installToast.classList.remove('show');
+    return;
+  }
+  installToast.classList.add('show');
+}
+
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredInstallPrompt = e;
+
+  if(!isAppInstalled()){
+    setTimeout(showInstallToast, 1200);
+  }
+});
+
+installBtn.addEventListener('click', async function(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+
+    if(choice.outcome === 'accepted'){
+      installToast.classList.remove('show');
+    }else{
+      showInstallToast();
+    }
+
+    deferredInstallPrompt = null;
+  }else{
+    alert('من المتصفح اضغط القائمة ثم اختر: إضافة إلى الشاشة الرئيسية');
+  }
+});
+
+installClose.addEventListener('click', function(){
+  installToast.classList.remove('show');
+
+  setTimeout(function(){
+    if(!isAppInstalled()){
+      showInstallToast();
+    }
+  }, 60000);
+});
+
+window.addEventListener('appinstalled', function(){
+  installToast.classList.remove('show');
+});
+
+setTimeout(function(){
+  if(!isAppInstalled()){
+    showInstallToast();
+  }
+}, 2500);

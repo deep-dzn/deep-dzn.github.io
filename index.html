@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title> ديب للتصاميم |Deep  dzn</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2EDBFF">
    <link rel="apple-touch-icon" sizes="180x180" href="https://i.ibb.co/nsPRydY0/934ff6c96a05.png">
     <link rel="icon" type="image/png" sizes="192x192" href="https://i.ibb.co/nsPRydY0/934ff6c96a05.png">
     <link rel="icon" type="image/png" sizes="512x512" href="https://i.ibb.co/nsPRydY0/934ff6c96a05.png">
@@ -525,6 +527,93 @@
       .card-info span{width:34px;height:34px;min-width:34px;border-radius:12px}
       .close-btn{left:4px;top:4px;width:42px;height:42px;border-radius:15px}
     }
+
+    .install-toast{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:9999;
+      width:min(370px,calc(100vw - 36px));
+      padding:14px;
+      border-radius:24px;
+      background:rgba(8,14,25,.9);
+      border:1px solid rgba(255,255,255,.15);
+      backdrop-filter:blur(20px);
+      box-shadow:0 22px 70px rgba(0,0,0,.45),0 0 35px rgba(46,219,255,.12);
+      display:none;
+      align-items:center;
+      gap:12px;
+      animation:installPop .35s ease;
+    }
+
+    .install-toast.show{display:flex}
+
+    .install-icon{
+      width:52px;
+      height:52px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+      box-shadow:0 12px 32px rgba(46,219,255,.25);
+      color:white;
+      font-size:22px;
+    }
+
+    .install-text{flex:1}
+    .install-text b{display:block;font-size:16px;margin-bottom:3px;color:white}
+    .install-text span{display:block;font-size:13px;color:var(--muted);line-height:1.5}
+
+    .install-actions{display:flex;gap:7px;align-items:center}
+
+    .install-btn,
+    .install-close{
+      border:none;
+      cursor:pointer;
+      font-family:inherit;
+      font-weight:900;
+      transition:.25s;
+    }
+
+    .install-btn{
+      padding:10px 12px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+      color:white;
+      white-space:nowrap;
+    }
+
+    .install-close{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:rgba(255,255,255,.09);
+      color:white;
+      display:grid;
+      place-items:center;
+    }
+
+    .install-btn:hover,.install-close:hover{transform:translateY(-2px)}
+
+    @keyframes installPop{
+      from{opacity:0;transform:translateY(18px) scale(.96)}
+      to{opacity:1;transform:translateY(0) scale(1)}
+    }
+
+    @media(max-width:520px){
+      .install-toast{
+        right:10px;
+        bottom:10px;
+        width:calc(100vw - 20px);
+        border-radius:20px;
+      }
+      .install-icon{width:46px;height:46px;border-radius:16px}
+      .install-text b{font-size:15px}
+      .install-text span{font-size:12px}
+      .install-btn{padding:9px 10px}
+    }
+
   </style>
 </head>
 <body>
@@ -637,6 +726,19 @@
       برمجة وتصميم qaysar
     </a>
   </footer>
+
+
+  <div class="install-toast" id="installToast">
+    <div class="install-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+    <div class="install-text">
+      <b>ثبت التطبيق</b>
+      <span>ضيف Deep على شاشة هاتفك وافتحه مثل التطبيق.</span>
+    </div>
+    <div class="install-actions">
+      <button class="install-btn" id="installBtn">تثبيت</button>
+      <button class="install-close" id="installClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </div>
 
   <script>
     const WORKER_URL = 'https://deepdzn.dzn.workers.dev';
@@ -764,6 +866,45 @@
     }
 
     loadDesigns();
+
+    let deferredInstallPrompt = null;
+    const installToast = document.getElementById('installToast');
+    const installBtn = document.getElementById('installBtn');
+    const installClose = document.getElementById('installClose');
+
+    function showInstallToast(){
+      if(localStorage.getItem('deep_install_toast_closed') === 'yes') return;
+      if(window.matchMedia('(display-mode: standalone)').matches) return;
+      installToast.classList.add('show');
+    }
+
+    window.addEventListener('beforeinstallprompt', function(e){
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      setTimeout(showInstallToast, 1200);
+    });
+
+    installBtn.addEventListener('click', async function(){
+      if(deferredInstallPrompt){
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        installToast.classList.remove('show');
+        localStorage.setItem('deep_install_toast_closed','yes');
+      }else{
+        alert('من المتصفح اضغط القائمة ثم اختر: إضافة إلى الشاشة الرئيسية');
+      }
+    });
+
+    installClose.addEventListener('click', function(){
+      installToast.classList.remove('show');
+      localStorage.setItem('deep_install_toast_closed','yes');
+    });
+
+    setTimeout(function(){
+      if(!deferredInstallPrompt) showInstallToast();
+    }, 2500);
+
 
     document.addEventListener('contextmenu', function(e){
       e.preventDefault();
